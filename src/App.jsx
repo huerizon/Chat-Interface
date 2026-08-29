@@ -8,6 +8,7 @@ const initialMessages = [
 export default function App() {
   const [messages, setMessages] = useState(initialMessages)
   const [draft, setDraft] = useState('')
+  const [isTyping, setIsTyping] = useState(false)
 
   function sendMessage(e) {
     e.preventDefault()
@@ -16,8 +17,10 @@ export default function App() {
 
     setMessages((prev) => [...prev, { id: prev.length + 1, sender: 'user', text }])
     setDraft('')
+    setIsTyping(true)
 
     setTimeout(() => {
+      setIsTyping(false)
       setMessages((prev) => [
         ...prev,
         { id: prev.length + 1, sender: 'bot', text: `You said: "${text}"` },
@@ -35,6 +38,7 @@ export default function App() {
             {m.text}
           </div>
         ))}
+        {isTyping && <div className="chat-message bot typing">Typing...</div>}
       </div>
 
       <form className="chat-input" onSubmit={sendMessage}>

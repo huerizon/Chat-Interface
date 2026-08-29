@@ -59,6 +59,11 @@ body {
   color: #fff;
 }
 
+.chat-message.typing {
+  font-style: italic;
+  opacity: 0.6;
+}
+
 .chat-input {
   display: flex;
   border-top: 1px solid #e5e7eb;
