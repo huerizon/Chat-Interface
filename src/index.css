@@ -64,6 +64,13 @@ body {
   opacity: 0.6;
 }
 
+.chat-time {
+  display: block;
+  margin-top: 4px;
+  font-size: 11px;
+  opacity: 0.6;
+}
+
 .chat-input {
   display: flex;
   border-top: 1px solid #e5e7eb;

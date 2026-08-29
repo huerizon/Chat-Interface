@@ -1,8 +1,12 @@
 import { useState } from 'react'
 import './index.css'
 
+function formatTime(date) {
+  return date.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
+}
+
 const initialMessages = [
-  { id: 1, sender: 'bot', text: 'Hi! How can I help you today?' },
+  { id: 1, sender: 'bot', text: 'Hi! How can I help you today?', time: formatTime(new Date()) },
 ]
 
 export default function App() {
@@ -15,7 +19,10 @@ export default function App() {
     const text = draft.trim()
     if (!text) return
 
-    setMessages((prev) => [...prev, { id: prev.length + 1, sender: 'user', text }])
+    setMessages((prev) => [
+      ...prev,
+      { id: prev.length + 1, sender: 'user', text, time: formatTime(new Date()) },
+    ])
     setDraft('')
     setIsTyping(true)
 
@@ -23,7 +30,12 @@ export default function App() {
       setIsTyping(false)
       setMessages((prev) => [
         ...prev,
-        { id: prev.length + 1, sender: 'bot', text: `You said: "${text}"` },
+        {
+          id: prev.length + 1,
+          sender: 'bot',
+          text: `You said: "${text}"`,
+          time: formatTime(new Date()),
+        },
       ])
     }, 400)
   }
@@ -36,6 +48,7 @@ export default function App() {
         {messages.map((m) => (
           <div key={m.id} className={`chat-message ${m.sender}`}>
             {m.text}
+            <span className="chat-time">{m.time}</span>
           </div>
         ))}
         {isTyping && <div className="chat-message bot typing">Typing...</div>}
